@@ -1,8 +1,12 @@
 # Playwright E2E Test Automation Framework
 
 ![CI](https://github.com/corgu1995/playwright-e2e-framework/actions/workflows/ci.yml/badge.svg)
+[![Live Test Report](https://img.shields.io/badge/Live%20Test%20Report-View%20on%20GitHub%20Pages-2ea44f)](https://corgu1995.github.io/playwright-e2e-framework/)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 
-> The CI badge above goes live once you push the repo and the first GitHub Actions run completes.
+> 📊 **[View the live test report »](https://corgu1995.github.io/playwright-e2e-framework/)** — the full interactive Playwright HTML report, auto-published to GitHub Pages on every push to `main`.
+>
+> _Badges and the report go live after the first CI run; the report needs GitHub Pages set to "GitHub Actions" once — see [Live test report](#live-test-report)._
 
 A production-style end-to-end test automation framework built with **Playwright** and **TypeScript**, following the **Page Object Model** and using **custom fixtures** for dependency injection. It exercises the public [Sauce Labs demo site](https://www.saucedemo.com) across Chromium, Firefox, and WebKit.
 
@@ -35,7 +39,8 @@ This framework automates the core e-commerce journey of the Sauce Labs demo app 
 playwright-e2e-framework/
 ├── .github/
 │   └── workflows/
-│       └── ci.yml              # GitHub Actions pipeline
+│       ├── ci.yml               # CI gate: runs the suite, uploads report artifact
+│       └── deploy-report.yml    # Publishes the HTML report to GitHub Pages
 ├── src/
 │   ├── fixtures/
 │   │   └── index.ts            # Custom test fixtures (page objects + logged-in state)
@@ -51,6 +56,7 @@ playwright-e2e-framework/
 │   └── checkout.spec.ts        # End-to-end purchase flow
 ├── .env.example                # Sample environment configuration
 ├── .gitignore
+├── LICENSE
 ├── package.json
 ├── playwright.config.ts        # Cross-browser, parallel, retry/trace config
 ├── tsconfig.json
@@ -95,3 +101,14 @@ Useful scripts:
 - **Typed Page Object Model** — strict TypeScript guarantees tests and page objects stay in sync.
 - **Custom fixtures** — dependency-injected page objects and a reusable authenticated-session fixture.
 - **CI with artifacts** — GitHub Actions installs browsers, runs the suite, and always uploads the HTML report (30-day retention) for inspection.
+- **Published live report** — a separate workflow deploys the interactive HTML report to GitHub Pages on every `main` build (see below).
+
+## Live test report
+
+Every push to `main` runs the suite in CI and publishes the **full Playwright HTML report** to GitHub Pages:
+
+**🔗 https://corgu1995.github.io/playwright-e2e-framework/**
+
+The report is interactive — drill into any test to see its steps, timings, and (on failure) the captured trace, screenshot, and video. It is produced by a dedicated [`deploy-report.yml`](.github/workflows/deploy-report.yml) workflow that runs **separately from the CI gate**, so publishing the report never affects the build status.
+
+> **One-time setup:** in this repo go to **Settings → Pages → Build and deployment → Source → "GitHub Actions."** The next push to `main` publishes the report at the URL above.
